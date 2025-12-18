@@ -1,13 +1,14 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLanguage } from '@/lib/LanguageContext';
-import { getTranslation } from '@/lib/i18n';
-import StudentForm from '@/components/StudentForm';
-import CareerRecommendations, { CareerOption } from '@/components/CareerRecommendations';
-import CollegeCard, { College } from '@/components/CollegeCard';
-import { StudentData, StudentDataDisplay } from '@/types/student';
+import { useLanguage } from '../../lib/LanguageContext';
+import { getTranslation } from '../../lib/i18n';
+import StudentForm from '../../components/StudentForm';
+import CareerRecommendations from '../../components/CareerRecommendations';
+import type { CareerOption } from '../../components/CareerRecommendations';
+import CollegeCard from '../../components/CollegeCard';
+import type { College } from '../../components/CollegeCard';
+import type { StudentData, StudentDataDisplay } from '../../types/student';
 
 type PageState = 'form' | 'recommendations' | 'colleges';
 
