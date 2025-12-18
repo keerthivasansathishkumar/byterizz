@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "latest",
@@ -17,5 +18,5 @@
     "lucide-react": "latest",
     "clsx": "latest",
     "tailwind-merge": "latest"
-  },
+  }
 }
