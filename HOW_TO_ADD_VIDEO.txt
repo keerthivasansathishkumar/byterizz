@@ -1,0 +1,96 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║              HOW TO ADD YOUR BACKGROUND VIDEO TO BYTERIZZ                  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        📹 VIDEO REQUIREMENTS:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Format: MP4 or WebM
+✅ Resolution: 1920x1080 (Full HD) or higher
+✅ Duration: 10-30 seconds (will loop automatically)
+✅ File Size: Keep under 10MB for better performance
+✅ Content: Pleasant nature OR student success story
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        📁 WHERE TO PLACE YOUR VIDEO:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Go to: frontend/public/videos/
+2. Place your video file there
+3. Name it exactly: background-video.mp4
+   OR: background-video.webm
+
+Example path:
+   frontend/public/videos/background-video.mp4
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        🎬 VIDEO CONTENT IDEAS:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Option 1: Pleasant Nature
+  - Beautiful landscapes
+  - Peaceful forests
+  - Mountains and valleys
+  - Calming water scenes
+
+Option 2: Student Success Story
+  - Graduation ceremony
+  - Student achievements
+  - Academic success moments
+  - Career milestones
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        🌐 FREE VIDEO SOURCES:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Pexels Videos: https://www.pexels.com/videos/
+   - Search: "nature", "student success", "graduation"
+   - Free to use, no attribution required
+
+2. Pixabay Videos: https://pixabay.com/videos/
+   - Free stock videos
+   - High quality options
+
+3. Coverr: https://coverr.co/
+   - Free video backgrounds
+   - Beautiful nature scenes
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        ✅ CURRENT SETUP:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+The video will:
+✅ Auto-play when page loads
+✅ Loop continuously
+✅ Be muted (for browser compatibility)
+✅ Cover the full background
+✅ Have a semi-transparent overlay for text readability
+
+If your video doesn't load, it will use online fallback videos.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                        🚀 AFTER ADDING YOUR VIDEO:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Save your video file in: frontend/public/videos/background-video.mp4
+2. Refresh your browser
+3. The video will automatically play in the background!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+

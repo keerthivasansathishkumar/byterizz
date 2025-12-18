@@ -1,0 +1,66 @@
+================================================================================
+                    HOW TO START BYTERIZZ APPLICATION
+================================================================================
+
+IMPORTANT: You need TWO terminal windows open at the same time!
+
+================================================================================
+TERMINAL 1 - BACKEND SERVER
+================================================================================
+
+1. Open PowerShell or Command Prompt
+2. Navigate to the project folder:
+   cd C:\Users\minic\.cursor\carrer
+
+3. Start the backend:
+   cd backend
+   npm run dev
+
+4. You should see: "Server is running on port 5000"
+5. KEEP THIS TERMINAL OPEN!
+
+================================================================================
+TERMINAL 2 - FRONTEND SERVER
+================================================================================
+
+1. Open ANOTHER PowerShell or Command Prompt window
+2. Navigate to the project folder:
+   cd C:\Users\minic\.cursor\carrer
+
+3. Start the frontend:
+   cd frontend
+   npm run dev
+
+4. You should see: "Ready on http://localhost:3000"
+5. KEEP THIS TERMINAL OPEN!
+
+================================================================================
+OPEN IN BROWSER
+================================================================================
+
+Once both servers are running, open your web browser and go to:
+
+    http://localhost:3000
+
+================================================================================
+TO STOP THE SERVERS
+================================================================================
+
+Press Ctrl+C in each terminal window to stop the servers.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Problem: "Port 5000 already in use"
+Solution: Close any other applications using port 5000, or change PORT in backend\.env
+
+Problem: "Cannot find module"
+Solution: Make sure you ran "npm install" in both frontend and backend folders
+
+Problem: "Gemini API error"
+Solution: Make sure you added your API key to backend\.env file
+
+================================================================================
+
+

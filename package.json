@@ -1,0 +1,15 @@
+{
+  "name": "byterizz-career-app",
+  "version": "1.0.0",
+  "description": "ByteRizz Career Success Web Application",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install"
+  },
+  "keywords": ["career", "education", "guidance"],
+  "author": "",
+  "license": "ISC"
+}
+

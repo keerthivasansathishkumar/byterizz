@@ -1,0 +1,21 @@
+========================================
+  IMPORTANT: SAVE YOUR LOGO HERE
+========================================
+
+1. Copy your logo image file
+2. Paste it in: frontend/public/logo.png
+3. Make sure the filename is exactly: logo.png
+4. Replace the existing logo.png file if it exists
+
+The logo should be:
+- PNG format (or JPG/JPEG - rename to .png)
+- Recommended size: 200x200 to 500x500 pixels
+- Your blue logo with "BYTERIZZ AI" and "RIZZ WITH BRAINS"
+
+After saving, the logo will appear:
+- In the header (top of every page)
+- On the home page hero section
+- On mobile and desktop
+
+========================================
+
