@@ -1,7 +1,8 @@
 'use client';
 
-import { useLanguage } from '@/lib/LanguageContext';
-import { getTranslation } from '@/lib/i18n';
+// FIXED: Changed @/ to ../
+import { useLanguage } from '../lib/LanguageContext';
+import { getTranslation } from '../lib/i18n';
 
 interface Feedback {
   name: string;
@@ -59,7 +60,9 @@ const feedbacks: Feedback[] = [
 
 export default function StudentFeedback() {
   const { language } = useLanguage();
-  const t = (key: keyof typeof import('@/lib/i18n').translations.en) => getTranslation(language, key);
+  
+  // FIXED: Simplified translation function to remove @/ dependency
+  const t = (key: any) => getTranslation(language, key);
 
   return (
     <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
@@ -75,11 +78,11 @@ export default function StudentFeedback() {
           {feedbacks.map((feedback, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-600 hover:shadow-lg transition"
+              className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600 hover:shadow-lg transition"
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-primary-700 font-bold text-lg">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-blue-700 font-bold text-lg">
                     {feedback.name.charAt(0)}
                   </span>
                 </div>
@@ -112,5 +115,3 @@ export default function StudentFeedback() {
     </section>
   );
 }
-
-
