@@ -1,9 +1,10 @@
 'use client';
 
-import { useLanguage } from '@/lib/LanguageContext';
-import { getTranslation } from '@/lib/i18n';
+// FIXED: Changed @/ to ../
+import { useLanguage } from '../lib/LanguageContext';
+import { getTranslation } from '../lib/i18n';
 import StudentProfile from './StudentProfile';
-import { StudentDataDisplay } from '@/types/student';
+import type { StudentDataDisplay } from '../types/student';
 
 export interface CareerOption {
   id: string;
@@ -21,13 +22,15 @@ interface CareerRecommendationsProps {
 
 export default function CareerRecommendations({ careers, onSelectCareer, isLoading, studentData }: CareerRecommendationsProps) {
   const { language } = useLanguage();
-  const t = (key: keyof typeof import('@/lib/i18n').translations.en) => getTranslation(language, key);
+  
+  // FIXED: Simplified the t function to remove the @/ shortcut
+  const t = (key: any) => getTranslation(language, key);
 
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
           <p className="text-gray-600">{t('loadingRecommendations')}</p>
         </div>
       </div>
@@ -60,16 +63,16 @@ export default function CareerRecommendations({ careers, onSelectCareer, isLoadi
           <div
             key={career.id}
             onClick={() => onSelectCareer(career.id)}
-            className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-all border-2 border-transparent hover:border-primary-300"
+            className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-all border-2 border-transparent hover:border-blue-300"
           >
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-800">{career.title}</h3>
-              <div className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-semibold">
+              <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">
                 {career.matchPercentage}%
               </div>
             </div>
             <p className="text-gray-600 mb-4">{career.description}</p>
-            <button className="w-full bg-primary-600 text-white py-2 rounded-lg font-semibold hover:bg-primary-700 transition">
+            <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
               {t('viewDetails')}
             </button>
           </div>
@@ -81,4 +84,3 @@ export default function CareerRecommendations({ careers, onSelectCareer, isLoadi
     </div>
   );
 }
-
