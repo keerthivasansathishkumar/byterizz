@@ -2,21 +2,21 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLanguage } from '../../lib/LanguageContext';
-import { getTranslation } from '../../lib/i18n';
-import StudentForm from '../../components/StudentForm';
-import CareerRecommendations from '../../components/CareerRecommendations';
-import type { CareerOption } from '../../components/CareerRecommendations';
-import CollegeCard from '../../components/CollegeCard';
-import type { College } from '../../components/CollegeCard';
-import type { StudentData, StudentDataDisplay } from '../../types/student';
+import { useLanguage } from '../lib/LanguageContext';
+import { getTranslation } from '../lib/i18n';
+import StudentForm from '../components/StudentForm';
+import CareerRecommendations from '../components/CareerRecommendations';
+import type { CareerOption } from '../components/CareerRecommendations';
+import CollegeCard from '../components/CollegeCard';
+import type { College } from '../components/CollegeCard';
+import type { StudentData, StudentDataDisplay } from '../types/student';
 
-// Added these missing imports found in your components folder
-import LanguageSelector from '../../components/LanguageSelector';
-import BackgroundVideo from '../../components/BackgroundVideo';
-import SuccessStories from '../../components/SuccessStories';
-import StudentFeedback from '../../components/StudentFeedback';
-import CompetitiveExamsList from '../../components/CompetitiveExamsList';
+// Corrected these to use single ../ since this file is in the 'app' folder
+import LanguageSelector from '../components/LanguageSelector';
+import BackgroundVideo from '../components/BackgroundVideo';
+import SuccessStories from '../components/SuccessStories';
+import StudentFeedback from '../components/StudentFeedback';
+import CompetitiveExamsList from '../components/CompetitiveExamsList';;
 
 export default function Home() {
   const router = useRouter();
