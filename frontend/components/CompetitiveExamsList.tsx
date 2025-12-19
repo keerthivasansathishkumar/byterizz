@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useLanguage } from '@/lib/LanguageContext';
-import { competitiveExams, getUpcomingExams, type CompetitiveExam } from '@/lib/competitiveExams';
+// FIXED: Changed @/ to ../
+import { useLanguage } from '../lib/LanguageContext';
+import { competitiveExams, getUpcomingExams, type CompetitiveExam } from '../lib/competitiveExams';
 
 export default function CompetitiveExamsList() {
   const { language } = useLanguage();
@@ -54,7 +55,7 @@ export default function CompetitiveExamsList() {
               onClick={() => setFilter(btn.id as any)}
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 filter === btn.id
-                  ? 'bg-primary-600 text-white'
+                  ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -68,7 +69,6 @@ export default function CompetitiveExamsList() {
           {filteredExams.map((exam) => {
             const appOpen = new Date(exam.applicationOpenDate);
             const appClose = new Date(exam.applicationCloseDate);
-            const examDate = new Date(exam.examDate);
             const today = new Date();
             const isApplicationOpen = today >= appOpen && today <= appClose;
             const isApplicationClosed = today > appClose;
@@ -76,7 +76,7 @@ export default function CompetitiveExamsList() {
             return (
               <div
                 key={exam.id}
-                className="bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-600 hover:shadow-lg transition"
+                className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600 hover:shadow-lg transition"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -118,7 +118,7 @@ export default function CompetitiveExamsList() {
                   href={exam.applicationLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-block w-full text-center bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition font-medium"
+                  className="mt-4 inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
                 >
                   Apply Now
                 </a>
@@ -134,6 +134,9 @@ export default function CompetitiveExamsList() {
     </section>
   );
 }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 9a11475f63496060efb9109a975a0fe78ab65aa0

@@ -1,5 +1,5 @@
 {
-  "name": "byterizz-frontend",
+  "name": "byterizz",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "next": "^14.2.15",
@@ -24,6 +25,16 @@
     "tailwindcss": "^3.4.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.2.15"
+=======
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest",
+    "lucide-react": "latest",
+    "clsx": "latest",
+    "tailwind-merge": "latest"
+>>>>>>> 9a11475f63496060efb9109a975a0fe78ab65aa0
   }
 }
-
