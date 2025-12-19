@@ -29,3 +29,4 @@ Write-Host "1. Add NEXT_PUBLIC_API_URL in Vercel dashboard" -ForegroundColor Yel
 Write-Host "2. Deploy backend to Railway or Render" -ForegroundColor Yellow
 
 
+

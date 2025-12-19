@@ -57,3 +57,4 @@ Write-Host "3. Run 'npm run dev' in the frontend directory" -ForegroundColor Yel
 Write-Host "4. Open http://localhost:3000 in your browser" -ForegroundColor Yellow
 
 
+

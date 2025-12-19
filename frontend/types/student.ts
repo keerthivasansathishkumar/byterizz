@@ -32,3 +32,4 @@ export interface StudentDataDisplay {
   jeeRank?: string | null;
 }
 
+

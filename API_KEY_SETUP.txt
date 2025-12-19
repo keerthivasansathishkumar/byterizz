@@ -41,3 +41,4 @@ GEMINI_API_KEY=AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz1234567
 After adding your API key, you can start the application!
 
 
+

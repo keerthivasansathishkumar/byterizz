@@ -31,3 +31,4 @@ Write-Host "Environment files setup complete!" -ForegroundColor Green
 Write-Host "Don't forget to add your Gemini API key to backend/.env" -ForegroundColor Yellow
 
 
+

@@ -59,3 +59,4 @@ echo "3. Run 'npm run dev' in the frontend directory"
 echo "4. Open http://localhost:3000 in your browser"
 
 
+
