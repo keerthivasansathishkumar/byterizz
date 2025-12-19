@@ -134,9 +134,3 @@ export default function CompetitiveExamsList() {
     </section>
   );
 }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 9a11475f63496060efb9109a975a0fe78ab65aa0
