@@ -9,23 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "next": "^14.2.15",
-    "@google/generative-ai": "^0.2.1"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.2.15"
-=======
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -34,7 +17,15 @@
     "autoprefixer": "latest",
     "lucide-react": "latest",
     "clsx": "latest",
-    "tailwind-merge": "latest"
->>>>>>> 9a11475f63496060efb9109a975a0fe78ab65aa0
+    "tailwind-merge": "latest",
+    "@google/generative-ai": "^0.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "latest"
   }
 }
