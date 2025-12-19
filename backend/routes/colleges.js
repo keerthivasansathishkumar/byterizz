@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/:careerId', async (req, res) => {
   try {
     const { careerId } = req.params;
-    const { marks, jeeRank, neetRank, catScore, matScore, stream } = req.query; // Get student data from query params
+    // 1. ADDED 'state' HERE to catch it from the frontend URL
+    const { marks, jeeRank, neetRank, catScore, matScore, stream, state } = req.query; 
 
     if (!careerId) {
       return res.status(400).json({
@@ -29,6 +30,7 @@ router.get('/:careerId', async (req, res) => {
       catScore: studentCatScore,
       matScore: studentMatScore,
       stream: stream,
+      state: state, // 2. ADDED 'state' HERE so the counseling logic can use it
     });
     
     res.json(result);
@@ -42,4 +44,3 @@ router.get('/:careerId', async (req, res) => {
 });
 
 export default router;
-

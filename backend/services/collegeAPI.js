@@ -254,59 +254,25 @@ const stateCounselingColleges = {
 };
 
 // Helper function to get state counseling colleges
-function getStateCounselingColleges(state, careerId, studentData) {
-  const stateKey = state?.toLowerCase().replace(/\s+/g, '-');
-  if (!stateKey || !stateCounselingColleges[stateKey]) {
-    return [];
-  }
-
-  const stateColleges = stateCounselingColleges[stateKey];
-  let counselingType = null;
-
-  // Determine counseling type based on career
-  if (careerId.includes('engineering') || careerId === 'cs_engineering' || careerId === 'mechanical_engineering' || careerId === 'electronics_engineering' || careerId === 'civil_engineering' || careerId === 'data_science' || careerId === 'ai_ml_engineering' || careerId === 'cybersecurity') {
-    counselingType = 'engineering';
-  } else if (careerId.includes('medicine') || careerId === 'mbbs_medicine' || careerId === 'bds_dental') {
+// --- REPLACE YOUR OLD COUNSELING TYPE BLOCK WITH THIS ---
+  const lowerCareer = careerId.toLowerCase();
+  
+  // 1. Detect Medical first
+  if (lowerCareer.includes('medicine') || 
+      lowerCareer.includes('mbbs') || 
+      lowerCareer.includes('doctor') || 
+      lowerCareer.includes('dental') || 
+      lowerCareer.includes('bds')) {
     counselingType = 'medical';
+  } 
+  // 2. Detect Engineering second
+  else if (lowerCareer.includes('engineering') || 
+           lowerCareer.includes('tech') || 
+           lowerCareer.includes('data') || 
+           lowerCareer.includes('ai')) {
+    counselingType = 'engineering';
   }
-
-  if (!counselingType || !stateColleges[counselingType]) {
-    return [];
-  }
-
-  const colleges = stateColleges[counselingType];
-  const { marks, jeeRank, neetRank } = studentData;
-
-  // Filter based on eligibility - More lenient for state counseling
-  return colleges.filter(college => {
-    // For state counseling, be more lenient with marks - only reject if marks are way too low
-    if (marks && college.minMarksPercentage) {
-      const studentMarks = parseFloat(marks);
-      // Allow if student has at least 40% or is within 10% of requirement
-      if (studentMarks < 40 && studentMarks < (college.minMarksPercentage - 10)) {
-        return false;
-      }
-    }
-    // For JEE - only check if college explicitly requires it AND has cutoff
-    if (college.requiresJEE && college.jeeRankCutoff) {
-      if (!jeeRank || jeeRank === null) {
-        return false; // College has strict JEE requirement
-      }
-      if (parseInt(jeeRank) > college.jeeRankCutoff) {
-        return false;
-      }
-    }
-    // For NEET - only check if college explicitly requires it AND has cutoff
-    if (college.requiresNeet && college.neetRankCutoff) {
-      if (!neetRank || neetRank === null) {
-        return false; // College has strict NEET requirement
-      }
-      if (parseInt(neetRank) > college.neetRankCutoff) {
-        return false;
-      }
-    }
-    return true;
-  });
+  // --- END OF REPLACEMENT ---
 }
 
 export async function getCollegesForCareer(careerId, studentData = {}) {
