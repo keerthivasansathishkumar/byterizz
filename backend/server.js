@@ -9,22 +9,44 @@ dotenv.config();
 
 const app = express();
 
-// FIXED CORS: We are explicitly telling the backend to trust your frontend
+// 1. MANUAL CORS & PREFLIGHT HANDLING (The Fix)
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https://byterizz-1.vercel.app', 
+    'https://byterizz-etde.vercel.app', 
+    'https://byterizz-lsd1.vercel.app',
+    'http://localhost:3000'
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // If the browser is just "testing" the connection (OPTIONS), say OK immediately
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
+// 2. STANDARD MIDDLEWARE
+app.use(express.json());
 app.use(cors({
-  origin: ['https://byterizz-etde.vercel.app', 'http://localhost:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: true, // Reflects the origin allowed above
+  credentials: true
 }));
 
-app.use(express.json());
-
-// Routes
+// 3. ROUTES
 app.use('/api/career', careerRoutes);
 app.use('/api/colleges', collegeRoutes);
-app.use('/api/class10', class10StreamRoutes); // Changed path to avoid double /career
+app.use('/api/class10', class10StreamRoutes);
 
-// Health check
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'ByteRizz API Server is running' });
 });
@@ -38,10 +60,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Vercel needs the app to be exported
+// IMPORTANT: Vercel needs the app exported
 export default app;
 
-// Only run app.listen if NOT on Vercel
+// Local development listener
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
