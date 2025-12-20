@@ -253,103 +253,52 @@ const stateCounselingColleges = {
   },
 };
 
-// Helper function to get state counseling colleges
-// --- REPLACE YOUR OLD COUNSELING TYPE BLOCK WITH THIS ---
-  const lowerCareer = careerId.toLowerCase();
-  
-  // 1. Detect Medical first
-  if (lowerCareer.includes('medicine') || 
-      lowerCareer.includes('mbbs') || 
-      lowerCareer.includes('doctor') || 
-      lowerCareer.includes('dental') || 
-      lowerCareer.includes('bds')) {
-    counselingType = 'medical';
-  } 
-  // 2. Detect Engineering second
-  else if (lowerCareer.includes('engineering') || 
-           lowerCareer.includes('tech') || 
-           lowerCareer.includes('data') || 
-           lowerCareer.includes('ai')) {
-    counselingType = 'engineering';
-  }
-  // --- END OF REPLACEMENT ---
+function getStateCounselingColleges(state, careerId, studentData) {
+  return [];
 }
 
 export async function getCollegesForCareer(careerId, studentData = {}) {
   try {
     const colleges = mockCollegesDatabase[careerId] || [];
-    const { marks, jeeRank, neetRank, catScore, matScore, stream, state } = studentData;
+    const { marks, jeeRank, neetRank, catScore, matScore, state } = studentData;
     
-    // Filter colleges based on student eligibility
     let eligibleColleges = colleges.filter(college => {
-      // Check marks percentage eligibility
       if (marks !== null && marks !== undefined) {
-        // College requires minimum marks percentage
         const minMarksRequired = college.minMarksPercentage || college.eligibility;
-        if (marks < minMarksRequired) {
-          return false; // Student doesn't meet marks requirement
-        }
+        if (marks < minMarksRequired) return false;
       }
 
-      // Check JEE rank if provided (for engineering colleges)
       if (college.requiresJEE || college.jeeRankCutoff) {
-        if (jeeRank === null || jeeRank === undefined) {
-          return false; // College requires JEE but student didn't attempt
-        }
-        if (college.jeeRankCutoff && jeeRank > college.jeeRankCutoff) {
-          return false; // Student's rank is worse than cutoff
-        }
+        if (jeeRank === null || jeeRank === undefined) return false;
+        if (college.jeeRankCutoff && jeeRank > college.jeeRankCutoff) return false;
       }
 
-      // Check NEET rank if provided (for medical colleges)
       if (college.requiresNEET || college.neetRankCutoff) {
-        if (neetRank === null || neetRank === undefined) {
-          return false; // College requires NEET but student didn't attempt
-        }
-        if (college.neetRankCutoff && neetRank > college.neetRankCutoff) {
-          return false; // Student's rank is worse than cutoff
-        }
+        if (neetRank === null || neetRank === undefined) return false;
+        if (college.neetRankCutoff && neetRank > college.neetRankCutoff) return false;
       }
 
-      // Check CAT score if provided (for MBA colleges)
       if (college.requiresCAT || college.catScoreCutoff) {
-        if (catScore === null || catScore === undefined) {
-          return false; // College requires CAT but student didn't attempt
-        }
-        if (college.catScoreCutoff && catScore < college.catScoreCutoff) {
-          return false; // Student's score is lower than cutoff
-        }
+        if (catScore === null || catScore === undefined) return false;
+        if (college.catScoreCutoff && catScore < college.catScoreCutoff) return false;
       }
 
-      // Check MAT score if provided (for MBA colleges)
       if (college.requiresMAT || college.matScoreCutoff) {
-        if (matScore === null || matScore === undefined) {
-          return false; // College requires MAT but student didn't attempt
-        }
-        if (college.matScoreCutoff && matScore < college.matScoreCutoff) {
-          return false; // Student's score is lower than cutoff
-        }
+        if (matScore === null || matScore === undefined) return false;
+        if (college.matScoreCutoff && matScore < college.matScoreCutoff) return false;
       }
 
-      return true; // Student is eligible
+      return true;
     });
 
-    // Get state counseling colleges if state is provided
     let stateCounselingCollegesList = [];
     if (state) {
       stateCounselingCollegesList = getStateCounselingColleges(state, careerId, studentData);
     }
 
-    // Sort by eligibility/match percentage (higher is better)
-    eligibleColleges = eligibleColleges
-      .sort((a, b) => {
-        // Prioritize colleges with better eligibility scores
-        return b.eligibility - a.eligibility;
-      })
-      .slice(0, 10); // Top 10 eligible colleges for more opportunities
-
-    // Combine regular colleges with state counseling (state counseling first)
-    const allColleges = [...stateCounselingCollegesList, ...eligibleColleges];
+    const allColleges = [...stateCounselingCollegesList, ...eligibleColleges]
+      .sort((a, b) => b.eligibility - a.eligibility)
+      .slice(0, 10);
 
     return {
       colleges: allColleges,
