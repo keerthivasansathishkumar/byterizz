@@ -14,6 +14,8 @@ const allowedOrigins = [
   'https://byterizz-1.vercel.app', 
   'https://byterizz-etde.vercel.app', 
   'https://byterizz-lsd1.vercel.app',
+'https://byterizz.vercel.app', // Your frontend
+        // For local testing
   'http://localhost:3000'
 ];
 
