@@ -259,60 +259,45 @@ function getStateCounselingColleges(state, careerId, studentData) {
 
 export async function getCollegesForCareer(careerId, studentData = {}) {
   try {
+    const colleges = mockCollegesDatabase[careerId] || [];
     const { marks, jeeRank, neetRank, catScore, matScore, state } = studentData;
     
-    // 1. We look at ALL categories to make sure we can find 10 courses
-    const allCategories = Object.keys(mockCollegesDatabase);
-    let allPotentialColleges = [];
+    let eligibleColleges = colleges.filter(college => {
+      if (marks !== null && marks !== undefined) {
+        const minMarksRequired = college.minMarksPercentage || college.eligibility;
+        if (marks < minMarksRequired) return false;
+      }
 
-    allCategories.forEach(catId => {
-      const colleges = mockCollegesDatabase[catId] || [];
-      
-      const eligible = colleges.filter(college => {
-        // Marks check
-        if (marks !== null && marks !== undefined) {
-          const minMarksRequired = college.minMarksPercentage || college.eligibility;
-          if (marks < minMarksRequired) return false;
-        }
+      if (college.requiresJEE || college.jeeRankCutoff) {
+        if (jeeRank === null || jeeRank === undefined) return false;
+        if (college.jeeRankCutoff && jeeRank > college.jeeRankCutoff) return false;
+      }
 
-        // --- THE CORRECT LOGIC ---
-        // If college needs JEE, only check it if jeeRank is provided. 
-        if (college.requiresJEE || college.jeeRankCutoff) {
-          if (!jeeRank) return false; // Skip if student has no JEE rank
-          if (jeeRank > college.jeeRankCutoff) return false;
-        }
+      if (college.requiresNEET || college.neetRankCutoff) {
+        if (neetRank === null || neetRank === undefined) return false;
+        if (college.neetRankCutoff && neetRank > college.neetRankCutoff) return false;
+      }
 
-        // If college needs NEET, only check it if neetRank is provided.
-        if (college.requiresNEET || college.neetRankCutoff) {
-          if (!neetRank) return false; // Skip if student has no NEET rank
-          if (neetRank > college.neetRankCutoff) return false;
-        }
+      if (college.requiresCAT || college.catScoreCutoff) {
+        if (catScore === null || catScore === undefined) return false;
+        if (college.catScoreCutoff && catScore < college.catScoreCutoff) return false;
+      }
 
-        // If college needs CAT/MAT, check those
-        if (college.requiresCAT && (!catScore || catScore < college.catScoreCutoff)) return false;
-        if (college.requiresMAT && (!matScore || matScore < college.matScoreCutoff)) return false;
+      if (college.requiresMAT || college.matScoreCutoff) {
+        if (matScore === null || matScore === undefined) return false;
+        if (college.matScoreCutoff && matScore < college.matScoreCutoff) return false;
+      }
 
-        return true; 
-      });
-      allPotentialColleges.push(...eligible);
+      return true;
     });
 
-    // 2. State Counseling Logic
     let stateCounselingCollegesList = [];
     if (state) {
-      // This creates a suggestion for state counseling if a state is picked
-      stateCounselingCollegesList = [{
-        id: 'state-counseling',
-        name: `${state} State Counseling`,
-        course: 'General/State Quota',
-        location: state,
-        eligibility: 100
-      }];
+      stateCounselingCollegesList = getStateCounselingColleges(state, careerId, studentData);
     }
 
-    // 3. Combine and give exactly 10 results
-    const allColleges = [...stateCounselingCollegesList, ...allPotentialColleges]
-      .sort((a, b) => (b.eligibility || 0) - (a.eligibility || 0))
+    const allColleges = [...stateCounselingCollegesList, ...eligibleColleges]
+      .sort((a, b) => b.eligibility - a.eligibility)
       .slice(0, 10);
 
     return {
@@ -321,13 +306,15 @@ export async function getCollegesForCareer(careerId, studentData = {}) {
       studentMarks: marks,
       studentJeeRank: jeeRank,
       studentNeetRank: neetRank,
-      studentState: state
+      studentCatScore: catScore,
+      studentMatScore: matScore,
     };
   } catch (error) {
     console.error('Error fetching colleges:', error);
     throw error;
   }
 }
+
 export async function fetchFromExternalAPI(careerId) {
   return null;
 }
