@@ -282,83 +282,88 @@ export async function getCollegesForCareer(careerId, studentData = {}) {
     
     // Filter colleges based on student eligibility
     let eligibleColleges = colleges.filter(college => {
+      
+      // --- ADDED: STREAM FILTER (Stop B.Tech for Pure Science) ---
+      if ((stream === 'Pure Science' || stream === 'PCB') && college.course.includes('B.Tech')) {
+        return false;
+      }
+
       // Check marks percentage eligibility
       if (marks !== null && marks !== undefined) {
-        // College requires minimum marks percentage
         const minMarksRequired = college.minMarksPercentage || college.eligibility;
         if (marks < minMarksRequired) {
-          return false; // Student doesn't meet marks requirement
+          return false;
         }
       }
 
-      // Check JEE rank if provided (for engineering colleges)
+      // Check JEE rank
       if (college.requiresJEE || college.jeeRankCutoff) {
         if (jeeRank === null || jeeRank === undefined) {
-          return false; // College requires JEE but student didn't attempt
+          return false; 
         }
         if (college.jeeRankCutoff && jeeRank > college.jeeRankCutoff) {
-          return false; // Student's rank is worse than cutoff
+          return false;
         }
       }
 
-      // Check NEET rank if provided (for medical colleges)
+      // Check NEET rank
       if (college.requiresNEET || college.neetRankCutoff) {
         if (neetRank === null || neetRank === undefined) {
-          return false; // College requires NEET but student didn't attempt
+          return false;
         }
         if (college.neetRankCutoff && neetRank > college.neetRankCutoff) {
-          return false; // Student's rank is worse than cutoff
+          return false;
         }
       }
 
-      // Check CAT score if provided (for MBA colleges)
+      // Check CAT score
       if (college.requiresCAT || college.catScoreCutoff) {
         if (catScore === null || catScore === undefined) {
-          return false; // College requires CAT but student didn't attempt
+          return false;
         }
         if (college.catScoreCutoff && catScore < college.catScoreCutoff) {
-          return false; // Student's score is lower than cutoff
+          return false;
         }
       }
 
-      // Check MAT score if provided (for MBA colleges)
+      // Check MAT score
       if (college.requiresMAT || college.matScoreCutoff) {
         if (matScore === null || matScore === undefined) {
-          return false; // College requires MAT but student didn't attempt
+          return false;
         }
         if (college.matScoreCutoff && matScore < college.matScoreCutoff) {
-          return false; // Student's score is lower than cutoff
+          return false;
         }
       }
 
-      return true; // Student is eligible
+      return true; 
     });
 
-    // Get state counseling colleges if state is provided
+    // Get state counseling colleges
     let stateCounselingCollegesList = [];
     if (state) {
       stateCounselingCollegesList = getStateCounselingColleges(state, careerId, studentData);
     }
 
-    // Sort by eligibility/match percentage (higher is better)
+    // Sort by eligibility
     eligibleColleges = eligibleColleges
       .sort((a, b) => {
-        // Prioritize colleges with better eligibility scores
         return b.eligibility - a.eligibility;
-      })
-      .slice(0, 10); // Top 10 eligible colleges for more opportunities
+      });
 
-    // Combine regular colleges with state counseling (state counseling first)
+    // Combine lists
     const allColleges = [...stateCounselingCollegesList, ...eligibleColleges];
 
+    // --- UPDATED: Return 9 Courses/Colleges ---
     return {
-      colleges: allColleges,
+      colleges: allColleges.slice(0, 9), 
       totalEligible: allColleges.length,
       studentMarks: marks,
       studentJeeRank: jeeRank,
       studentNeetRank: neetRank,
       studentCatScore: catScore,
       studentMatScore: matScore,
+      stream: stream
     };
   } catch (error) {
     console.error('Error fetching colleges:', error);
