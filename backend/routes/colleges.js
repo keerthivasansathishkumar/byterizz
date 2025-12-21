@@ -6,23 +6,32 @@ const router = express.Router();
 router.get('/:careerId', async (req, res) => {
   try {
     const { careerId } = req.params;
+    // 1. ADDED 'state' HERE to catch it from the frontend URL
     const { marks, jeeRank, neetRank, catScore, matScore, stream, state } = req.query; 
 
-    // Convert strings from URL to real numbers
-    const studentData = {
-      marks: marks ? parseFloat(marks) : null,
-      jeeRank: jeeRank && jeeRank !== 'null' ? parseInt(jeeRank) : null,
-      neetRank: neetRank && neetRank !== 'null' ? parseInt(neetRank) : null,
-      catScore: catScore && catScore !== 'null' ? parseFloat(catScore) : null,
-      matScore: matScore && matScore !== 'null' ? parseFloat(matScore) : null,
-      stream: stream,
-      state: state,
-    };
+    if (!careerId) {
+      return res.status(400).json({
+        error: 'Missing career ID',
+        message: 'Please provide a valid career ID',
+      });
+    }
 
-    // LOGIC FIX: 
-    // If the student has a NEET rank, we should look for Medical careers 
-    // regardless of what the 'careerId' in the URL says.
-    const result = await getCollegesForCareer(careerId, studentData);
+    // Convert query params to numbers
+    const studentMarks = marks ? parseFloat(marks) : null;
+    const studentJeeRank = jeeRank && jeeRank !== 'null' ? parseInt(jeeRank) : null;
+    const studentNeetRank = neetRank && neetRank !== 'null' ? parseInt(neetRank) : null;
+    const studentCatScore = catScore && catScore !== 'null' ? parseFloat(catScore) : null;
+    const studentMatScore = matScore && matScore !== 'null' ? parseFloat(matScore) : null;
+
+    const result = await getCollegesForCareer(careerId, {
+      marks: studentMarks,
+      jeeRank: studentJeeRank,
+      neetRank: studentNeetRank,
+      catScore: studentCatScore,
+      matScore: studentMatScore,
+      stream: stream,
+      state: state, // 2. ADDED 'state' HERE so the counseling logic can use it
+    });
     
     res.json(result);
   } catch (error) {
