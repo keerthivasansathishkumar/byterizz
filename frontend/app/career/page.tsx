@@ -65,6 +65,7 @@ export default function CareerPage() {
       }
 
       const result = await response.json();
+	const finalCareers = result?.careers || result?.payload || [];
       setCareers(result.careers || []);
       setPageState('recommendations');
     } catch (err) {
