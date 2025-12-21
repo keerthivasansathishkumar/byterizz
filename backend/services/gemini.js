@@ -198,7 +198,7 @@ export async function getCareerRecommendations(studentData) {
       studentData.class12SubjectCombination === 'pcb' ||
       studentData.class12SubjectCombination === 'biology-only';
 
-    const prompt = `You are a career guidance counselor. Analyze the following student profile and recommend 10 suitable career options, focusing on BOOMING and HIGH-DEMAND careers that will lead to successful careers. Prioritize trending fields like AI/ML, Data Science, Cybersecurity, Digital Marketing, etc, but ONLY when the student is actually eligible based on subjects and exams.
+    const prompt = `You are a career guidance counselor. Analyze the following student profile and recommend 5-6 suitable career options, focusing on BOOMING and HIGH-DEMAND careers that will lead to successful careers. Prioritize trending fields like AI/ML, Data Science, Cybersecurity, Digital Marketing, etc, but ONLY when the student is actually eligible based on subjects and exams.
 
 IMPORTANT: Consider the competitive exams the student has attempted. If they have attempted engineering exams (JEE, BITSAT, VITEEE, SRMJEEE), recommend engineering careers. If they attempted medical exams (NEET, AIIMS, JIPMER), recommend medical careers. If they attempted management exams (CAT, MAT, XAT, CMAT, SNAP), recommend MBA/Business careers.
 
@@ -255,7 +255,7 @@ Return ONLY valid JSON, no additional text or markdown formatting.`;
     const careerData = JSON.parse(cleanedText);
     
     // Validate and ensure we have appropriate careers
-    if (!careerData.careers || careerData.careers.length < 10) {
+    if (!careerData.careers || careerData.careers.length < 4) {
       return getFallbackCareers(studentData);
     }
 
@@ -269,7 +269,7 @@ Return ONLY valid JSON, no additional text or markdown formatting.`;
       validCareerIds.includes(career.id)
     );
 
-    if (validatedCareers.length < 10) {
+    if (validatedCareers.length < 4) {
       // If AI returned invalid IDs, use fallback
       return getFallbackCareers(studentData);
     }
