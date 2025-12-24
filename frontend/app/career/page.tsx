@@ -64,10 +64,16 @@ export default function CareerPage() {
         throw new Error('Failed to get career recommendations');
       }
 
-      const result = await response.json();
-	const finalCareers = result?.careers || result?.payload || [];
-      setCareers(result.careers || []);
-      setPageState('recommendations');
+      // Replace the old result logic with this:
+const result = await response.json();
+
+// This checks if result exists, then checks for 'careers', 
+// then 'payload', then defaults to an empty list.
+// IT WILL NEVER CRASH WITH THIS LINE.
+const finalData = result?.careers || result?.payload || (Array.isArray(result) ? result : []);
+
+setCareers(finalData);
+setPageState('recommendations');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
